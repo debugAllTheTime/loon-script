@@ -1,0 +1,12 @@
+#!name = Claude iOS 会话重置
+#!desc = 临时移除发往 Claude/Anthropic 的 sessionKey、routingHint cookie，清除卡死的本地登录态。用完请关闭本插件再重新登录。移植自 durianh96/fix-claude-ios-session。
+#!author = ported from durianh96/fix-claude-ios-session
+#!system = ios
+#!homepage = https://github.com/durianh96/fix-claude-ios-session
+
+[Script]
+http-request ^https?:\/\/([\w-]+\.)*(claude\.ai|claude\.com|anthropic\.com) script-path=https://raw.githubusercontent.com/debugAllTheTime/loon-script/refs/heads/main/claude_session_reset.js, requires-body=false, timeout=10, tag=claude-session-reset-req, enable=true
+http-response ^https?:\/\/([\w-]+\.)*(claude\.ai|claude\.com|anthropic\.com) script-path=https://raw.githubusercontent.com/debugAllTheTime/loon-script/refs/heads/main/claude_session_reset.js, requires-body=false, timeout=10, tag=claude-session-reset-resp, enable=true
+
+[MITM]
+hostname = %APPEND% claude.ai, *.claude.ai, claude.com, *.claude.com, anthropic.com, *.anthropic.com
